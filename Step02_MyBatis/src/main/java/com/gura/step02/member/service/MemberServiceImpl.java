@@ -35,20 +35,32 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ModelAndView update(MemberDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		dao.update(dto);
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("msg", "회원정보를 수정했습니다.");
+		
+		return mView;
 	}
 
 	@Override
-	public ModelAndView delete(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	// return값을 void로 하려면 interface에서 return값을 수정해야 한다.
+	public void delete(int num) {
+		// Dao를 이용해서 삭제한다.
+		dao.delete(num);
+	
 	}
 
 	@Override
 	public ModelAndView getData(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// 수정할 회원의 정보를 얻어와서 
+		MemberDto dto = dao.getData(num);
+		// ModelAndView객체에 담고
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("dto", dto);
+		// 리턴해준다.
+		return mView;
 	}
 
 	@Override

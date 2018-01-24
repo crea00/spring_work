@@ -9,7 +9,6 @@
 </head>
 <body>
 <h3>회원추가 폼</h3>
-<!--  -->
 <form action="insert.do" method="post">
 	<label for="name">이름</label>
 	<input type="text" name="name" id="name" />
