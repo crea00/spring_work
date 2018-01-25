@@ -11,12 +11,14 @@ public class FileDto {
 	private long fileSize;
 	private String regdate;
 	private MultipartFile file; //Spring 에서 파일 업로드 처리하기 위해
+	private int startRowNum;
+	private int endRowNum;
 	
 	//디폴트 생성자 
 	public FileDto(){}
 
 	public FileDto(int num, String writer, String title, String orgFileName, String saveFileName, long fileSize,
-			String regdate, MultipartFile file) {
+			String regdate, MultipartFile file, int startRowNum, int endRowNum) {
 		super();
 		this.num = num;
 		this.writer = writer;
@@ -26,6 +28,8 @@ public class FileDto {
 		this.fileSize = fileSize;
 		this.regdate = regdate;
 		this.file = file;
+		this.startRowNum = startRowNum;
+		this.endRowNum = endRowNum;
 	}
 
 	public int getNum() {
@@ -91,25 +95,26 @@ public class FileDto {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
+
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+	
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

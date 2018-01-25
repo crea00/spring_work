@@ -27,15 +27,22 @@ public class FileDaoImpl implements FileDao{
 	}
 
 	@Override
-	public List<FileDto> getList() {
-		
-		return session.selectList("file.getList");
+	public List<FileDto> getList(FileDto dto) {
+		// parameterType으로 검색키워드가 담긴 FileDto를 전달
+		return session.selectList("file.getList", dto);
 	}
 
 	@Override
 	public FileDto getData(int num) {
 		
 		return session.selectOne("file.getData", num);
+	}
+
+	@Override
+	public int getCount(FileDto dto) {
+		// parameterType으로 검색키워드가 담긴 FileDto를 전달
+		int count = session.selectOne("file.getCount", dto);
+		return count;
 	}
 	
 	
