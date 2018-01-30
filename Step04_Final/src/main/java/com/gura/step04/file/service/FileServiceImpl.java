@@ -71,24 +71,27 @@ public class FileServiceImpl implements FileService{
 
 	@Override
 	public ModelAndView list(HttpServletRequest request) {
-		//검색과 관련된 파라미터를 읽어와 본다.
+		// 검색과 관련된 파라미터를 읽어와 본다.
 		String keyword=request.getParameter("keyword");
 		String condition=request.getParameter("condition");
 		
-		//FileDto 객체를 생성해서
+		//ModelAndView 객체생성 (request에 담을 내용을 여기에 담는다.) 
+		ModelAndView mView=new ModelAndView();
+
+		// FileDto 객체를 생성해서
 		FileDto dto=new FileDto();
-		if(keyword != null){ //검색어가 전달된 경우
-			if(condition.equals("titlecontent")){ //제목+파일명 검색
+		if(keyword != null){ // 검색어가 전달된 경우
+			if(condition.equals("titlecontent")){ // 제목+파일명 검색
 				dto.setTitle(keyword);
 				dto.setOrgFileName(keyword);
-			}else if(condition.equals("title")){//제목 검색
+			}else if(condition.equals("title")){// 제목 검색
 				dto.setTitle(keyword);
-			}else if(condition.equals("writer")){//작성자 검색
+			}else if(condition.equals("writer")){// 작성자 검색
 				dto.setWriter(keyword);
 			}
-			// list.jsp 뷰페이지에서 필요한 내용을 request 에 담는다.
-			request.setAttribute("condition", condition);
-			request.setAttribute("keyword", keyword);
+			// list.jsp 뷰페이지에서 필요한 내용을 mView에 담는다.			
+			mView.addObject("condtion", condition);
+			mView.addObject("keyword", keyword);
 		}
 		
 		
@@ -124,19 +127,22 @@ public class FileServiceImpl implements FileService{
 		
 		//1. 글목록을 불러온다.
 		List<FileDto> list=fileDao.getList(dto);
-		//2. request 에 담는다.
-		request.setAttribute("list", list);
+		//2. ModelAndView 에 담는다.
+		//request.setAttribute("list", list);
+		mView.addObject("list", list);
 		
 		// 현재 페이지 번호 
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("startPageNum", startPageNum);
-		request.setAttribute("endPageNum", endPageNum);
-		// 전체 페이지의 갯수
-		request.setAttribute("totalPageCount", totalPageCount);
+		//request.setAttribute("pageNum", pageNum);
+		mView.addObject("pageNum", pageNum);
+		//request.setAttribute("startPageNum", startPageNum);
+		mView.addObject("startPageNum", startPageNum);
+		//request.setAttribute("endPageNum", endPageNum);
+		mView.addObject("endPageNum", endPageNum);
 		
-		//ModelAndView 객체에 담아서 
-		ModelAndView mView=new ModelAndView();
-		mView.addObject("list", list);
+		// 전체 페이지의 갯수
+		//request.setAttribute("totalPageCount", totalPageCount);
+		mView.addObject("totalPageCount", totalPageCount);
+		
 		
 		//리턴한다.
 		return mView;

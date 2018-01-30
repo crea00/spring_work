@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,10 +17,16 @@ public class UsersServiceImpl implements UsersService{
 	//의존 객체
 	@Autowired
 	private UsersDao dao;
-	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	@Override
 	public ModelAndView signup(UsersDto dto) {
+		// 입력한 비밀번호를 암호화된 문자열로 얻어낸다.
+		String hash = encoder.encode(dto.getPwd());
+		// Dto에 다시 넣어준다.
+		dto.setPwd(hash);
+		
 		//Dao 를 이용해서 DB 에 저장
 		dao.insert(dto);
 		
@@ -40,8 +47,20 @@ public class UsersServiceImpl implements UsersService{
 
 	@Override
 	public ModelAndView login(UsersDto dto, HttpServletRequest request) {
-		//Dao 를 이용해서 유효한 정보인지 확인한다.
-		boolean isValid=dao.isValid(dto);
+		// 입력한 아이디를 이용해서 가입된 회원정보가 있는지 select한다.
+		UsersDto resultDto = dao.getData(dto.getId());
+		
+		// 아이디, 비밀번호가 유효한지 여부
+		boolean isValid = false;
+		
+		if(resultDto != null){	// DB에 입력한 아이디가 존재한다면
+			// 비밀번호를 확인한다. (입력한 비밀번호와 DB에 저장된 비밀번호를 encoder를 이용해서 확인한다.)
+			boolean isMatch = encoder.matches(dto.getPwd(), resultDto.getPwd());
+			if(isMatch){
+				isValid = true;
+			}
+		}
+		
 		//원래 가야할 url
 		String url=request.getParameter("url");
 		

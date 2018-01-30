@@ -28,6 +28,13 @@
 </div>
 
 <div class="container">
+	<!-- breadcrumb UI 제공하기 -->
+	<ol class="breadcrumb">
+		<li><a href="${pageContext.request.contextPath }">Home</a></li>
+		<li class="active">자료실</li>
+		
+	</ol>
+
 	<h3>업로드된 파일 목록입니다.</h3>
 	<a class="btn btn-primary btn-xs" href="insertform.do"><i class="glyphicon glyphicon-upload"></i>파일 올리기</a>
 	<table class="table table-bordered table-condensed">

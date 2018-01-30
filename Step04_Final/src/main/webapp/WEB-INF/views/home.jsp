@@ -6,10 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>home.jsp</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 </head>
 <body>
-<a href="users/info.do">테스트 링크</a>
-<h3>인덱스 페이지 입니다.</h3>
+
+<div class="navbar navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar navbar-brand" href="${pageContext.request.contextPath }/home.do">Acorn</a>
+		</div>
+		<h3 class="pull-right">인덱스 페이지 입니다.</h3>
+		<a href="users/info.do">테스트 링크</a>
+	</div>
+</div>
+
 <c:choose>
 	<c:when test="${empty id }">
 		<a href="users/loginform.do">로그인</a>
@@ -22,6 +32,10 @@
 <ul>
 	<li><a href="users/signup_form.do">회원가입</a></li>
 	<li><a href="file/list.do">자료실 목록보기</a></li>
+	<li><a href="cafe/list.do">카페 글목록보기</a></li>
+	<li><a href="shop/list.do">상품 목록보기</a></li>
+	<li><a href="shop/test1.do">예외1</a></li>
+	<li><a href="shop/test1.do?name=gura">예외 test2</a></li>
 </ul>
 
 <h4>공지사항</h4>
