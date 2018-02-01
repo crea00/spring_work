@@ -19,10 +19,13 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+  <!--.do로 끝나는 요청은 모두 spring controller를 타게 된다. -->
   <servlet-mapping>
     <servlet-name>appServlet</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+  
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

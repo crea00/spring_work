@@ -68,6 +68,7 @@ public class UsersController {
 		return mView;
 	}
 	
+	// 로그인 요청 처리
 	@RequestMapping("/users/login")
 	public ModelAndView login(@ModelAttribute UsersDto dto, 
 			HttpServletRequest request){
@@ -76,6 +77,7 @@ public class UsersController {
 		mView.setViewName("users/login_result");
 		return mView;
 	}
+	
 	//로그아웃 요청 처리 
 	@RequestMapping("/users/logout")
 	public ModelAndView logout(HttpSession session, 

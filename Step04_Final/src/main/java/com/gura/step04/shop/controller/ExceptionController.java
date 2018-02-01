@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.step04.exception.MyException;
+import com.gura.step04.exception.NoDeliveryException;
 
 /*
  *	Exception을 처리하는 Controller
@@ -23,6 +24,8 @@ public class ExceptionController {
 		return mView;
 	}
 
+
+	
 	@ExceptionHandler(DataAccessException.class)
 	public ModelAndView handleDataAccessException(DataAccessException dae){
 		
@@ -32,3 +35,4 @@ public class ExceptionController {
 		return mView;
 	}
 }
+
