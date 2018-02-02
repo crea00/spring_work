@@ -128,6 +128,7 @@ public class UsersController {
 		mView.setViewName("redirect:/users/info.do");
 		return mView;
 	}
+	
 	@RequestMapping("/users/delete")
 	public ModelAndView authDelete(HttpServletRequest request){
 		HttpSession session=request.getSession();

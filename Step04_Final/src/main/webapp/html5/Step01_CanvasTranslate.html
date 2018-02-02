@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html5/Step01_CanvasTranslate.html</title>
+</head>
+<style>
+
+</style> 
+
+		
+<body>
+<canvas id="myCanvas" width="500" height="500"></canvas>
+<script src="js/jquery-3.2.1.js"></script>
+<script>
+	var canvas = document.querySelector("#myCanvas");	// canvas의 참조값을 얻어옴
+	var context = canvas.getContext("2d");
+	
+	// 이미지 로딩하기
+	var rabbitImg = new Image();
+	rabbitImg.src = "images/rabbit_1.png";
+	
+	// 평행이동을 할 값을 변수에 저장
+	var trX = 0;
+	var trY = 0;
+	
+	var angle = 0;	// context를 회전시킬 각도
+	
+	
+	// drawScreen함수를 20/1000초 마다 호출하게 하기
+	setInterval(drawScreen, 20);
+	
+	// 화면을 계속 다시그리면 어떤 변화를 나타내기 좋음
+	function drawScreen(){
+		// 사각형 영역 삭제
+		context.clearRect(-500, -500, 1000, 1000);
+		
+		// context의 현재 상태(초기상태 )저장
+		context.save();
+		// context 평행이동(변화를 가함)
+		context.translate(trX, trY);
+		
+		// context 45도 회전시키기
+		// context.rotate(45*Math.PI/180);
+		
+		// context 평행이동(변화를 가함)
+		context.translate(100, 100);
+		
+		// context 회전시키기
+		context.rotate(angle);
+	
+		// 파란색으로 context의 x축 그리기
+		context.strokeStyle = "blue";
+		context.beginPath();
+		context.moveTo(-500, 0);
+		context.lineTo(500, 0);
+		context.stroke();
+		context.closePath();
+		// 빨간색으로 context의 y축 그리기
+		context.strokeStyle = "red";
+		context.beginPath();
+		context.moveTo(0, -500);
+		context.lineTo(0, 500);
+		context.stroke();
+		context.closePath();
+		
+		// 이미지 출력하기
+		context.drawImage(rabbitImg, 0, 0, 100, 100);
+		
+		// 저장된 상태로 되돌리기 (초기상태로 만들기)
+		context.restore();
+	}
+	
+	// key event 처리
+	$("body").keydown(function(event){
+		// 눌러진 키의 코드값을 읽어온다.
+		var keyCode = event.keyCode;
+		if(keyCode == 37){				// 왼쪽방향키
+			trX -= 1;
+		} else if (keyCode == 38) {		// 위쪽방향키
+			trY -= 1;
+		} else if (keyCode == 39) {		// 오른쪽 방향키
+			trX += 1;
+		} else if (keyCode == 40) {		// 아래쪽 방향키
+			trY += 1;
+		} else if (keyCode == 13) {		// enter
+			// 10도 증가
+			angle += 10*(Math.PI/180);;	// rad 단위로 환산
+		}
+	});
+	
+</script>
+</body>
+</html>
