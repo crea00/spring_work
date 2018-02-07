@@ -20,7 +20,12 @@ public class MainClass2 {
 		
 		System.out.println("isValid : " + isValid);
 		
-		//
-	}
+		// 로그인할 때 잘못 입력한 비밀번호라고 가정
+		String inputPwd2 = "2345";
+		
+		boolean isValid2 = BCrypt.checkpw(inputPwd2, hash1);
+		
+		System.out.println("isValid2 : " + isValid2);
+ 	}
 	
 }
