@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Step03_DataBase.html</title>
+</head>
+<body>
+<input type="text" id="inputMsg" placeholder="메세지 입력" />
+<button id="saveBtn">저장</button>
+<ul id="msgList">
+
+</ul>
+<script src="js/jquery-3.2.1.js"></script>
+<script>
+	
+	var db;		// DB객체를 담을 변수
+	
+	initDB();	// DataBase초기화 함수 호출
+		
+	function initDB(){
+		if(window.openDatabase == undefined){
+			alert("이 웹브라우저는 DataBase를 지원하지 않습니다.");
+			return;		// 함수 종료
+		}
+		
+		// DB객체 얻어오기
+		db = window.openDatabase("HelloDB", "1.0", "test", 1024*1024*10);
+		// 테이블이 존재하지 않으면 테이블 만들기
+		db.transaction(function(dbHelper){
+			dbHelper.executeSql("CREATE TABLE IF NOT EXISTS msgs(num INTEGER PRIMARY KEY AUTOINCREMENT, msg TEXT NOT NULL)");
+		});
+	}
+
+	$("#saveBtn").click(function(){
+		var msg = $("#inputMsg").val();	
+		// 문자열을 테이블에 저장하기
+		db.transaction(function(dbHelper){
+			var sql = "INSERT INTO msgs (msg) VALUES(?)"
+			dbHelper.executeSql(sql, [msg]);
+			alert("테이블에 저장했습니다.");
+			$("#inputMsg").val("");
+		});
+	});
+	
+	// 메세지 목록 보기 버튼을 눌렀을 때
+	$("#loadBtn").click(function(){
+		var query = "SELECT num,msg FROM msgs ORDER BY num DESC";
+		db.transaction(function(dbHelper){
+			// query문, 인자, 성공했을 때 실행할 함수, 실패했을 때 실행할 함수
+			dbHelper.executeSql(query, [], function(dbHelper, rs){
+				for(var i = 0; i < rs.rows.length; i++){
+					var row = rs.rows.item(i);
+					var num = row.num;
+					var msg = row.msg;
+					
+					$("<li/>").text(num + " | " + msg)
+					.appendTo("#msgList");
+				}	
+			});
+		});
+	});
+</script>
+</body>
+</html>

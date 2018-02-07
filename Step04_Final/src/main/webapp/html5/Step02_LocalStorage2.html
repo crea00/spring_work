@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Step02_LocalStorage2.html</title>
+</head>
+<body>
+<input type="text" id="inputNum" placeholder="번호입력..."/>
+<input type="text" id="inputName" placeholder="이름입력..."/>
+<input type="text" id="inputAddr" placeholder="주소입력..."/>
+<button id="saveBtn">저장</button>
+<button id="loadBtn">불러오기</button>
+<button id="deleteBtn">삭제</button>
+<script src="js/jquery-3.2.1.js."></script>
+<script>
+	$("#saveBtn").click(function(){
+		// 입력한 문자열 읽어오기
+		var num = $("#inputNum").val();
+		var name = $("#inputName").val();
+		var addr = $("#inputAddr").val();
+		// 입력한 문자열을 object에 담는다.
+		var mem = {num:num, name:name, addr:addr};
+		// localStorage에는 문자열만 저장할 수 있으므로 localStorage.mem = mem; 이 안된다
+		// so, Object -> JSON문자열로 바꿔서 저장한다.
+		var jsonMem = JSON.stringify(mem);
+		localStorage.mem = jsonMem;
+		
+		alert("저장했습니다.");
+		// localStorage에는 오직 문자열만 저장할 수 있으므로 여러가지 정보를 담고 싶으면 JSON문자열로 저장한다.
+		// localStorage에는 숫자를 저장해도 문자열로 바뀌어서 저장된다.
+	});
+	
+	// JSON.stringify();를 이용해서 object나 array를 string화 시켜서 저장해준다. (반대과정은 JSON.parse();를 이용한다.)
+	// {}(object) -> "{}"(String)
+	// [](array) -> "[]"(String)
+	
+	// localStorage는 url당 하나의 공간이 제공된다.
+	
+	
+	
+	
+	$("#loadBtn").click(function(){
+		// localStoarge에 저장된 JSON문자열 얻어오기
+
+		// 방의 이름이 변수나 객체에 들어가 있는 경우 
+		// var a = "mem";
+		// var strMem = localStorage.a; 라고 쓸 수 없다
+		// => var json = localStorage[a]; -> localStorage의 a에 들어있는 값인 mem인 방을 참조한다.
+		
+	
+		// var json = JSON.parse(localStorage["mem"]); 과 같은 의미
+		var json = JSON.parse(localStorage.mem);
+
+		$("#inputNum").val(json.num);
+		$("#inputName").val(json.name);
+		$("#inputAddr").val(json.addr);
+		
+	});
+	
+	$("#deleteBtn").click(function(){
+		delete localStorage.mem;
+		
+	});
+</script>
+</body>
+</html>

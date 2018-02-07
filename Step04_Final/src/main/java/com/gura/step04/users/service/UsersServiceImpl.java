@@ -63,7 +63,7 @@ public class UsersServiceImpl implements UsersService{
 		
 		//원래 가야할 url
 		String url=request.getParameter("url");
-		
+		System.out.println("원래 가야할 url" + url);
 		ModelAndView mView=new ModelAndView();
 		if(isValid){//아이디 비밀번호가 일치 한다면
 			//로그인 처리를 해준다.

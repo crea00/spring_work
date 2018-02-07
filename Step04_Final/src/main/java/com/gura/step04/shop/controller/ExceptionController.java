@@ -24,7 +24,6 @@ public class ExceptionController {
 		return mView;
 	}
 
-
 	
 	@ExceptionHandler(DataAccessException.class)
 	public ModelAndView handleDataAccessException(DataAccessException dae){

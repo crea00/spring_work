@@ -18,55 +18,38 @@ public class AuthAspect {
 	 */
 	@Around("execution(* auth*(..))")
 	public Object loginCheck(ProceedingJoinPoint joinPoint) throws Throwable{
-		//aop 가 적용된 메소드에 전달된 인자들 얻어오기
-		Object[] args=joinPoint.getArgs();
-		//반복문 돌면서 하나씩 추출해서
+		// AOP가 적용된 메소드에 전달된 인자를 얻어온다.
+		Object[] args = joinPoint.getArgs();
+		
+		// 반복문을 돌면서 하나씩 추출한다
 		for(Object tmp:args){
-			//만일 객체가 HttpServletRequest type 이라면
+			// 만일 객체가 HttpServletRequest type이라면
 			if(tmp instanceof HttpServletRequest){
-				//원래 type 으로 casting 해서 
-				HttpServletRequest request=(HttpServletRequest)tmp;
-				//로그인 정보가 있는지 확인 
-				String id=(String)request.getSession().getAttribute("id");
-				if(id==null){
-					//로그인 정보가 없으면 여기가 수행된다.
-					ModelAndView mView=new ModelAndView();
+				// 원래 type으로 casting해서
+				HttpServletRequest request = (HttpServletRequest)tmp;
+				// 로그인 정보가 있는지 확인
+				String id = (String)request.getSession().getAttribute("id");
+				if(id == null){
+					// 로그인 정보가 없다면 여기가 수행된다.
+					ModelAndView mv = new ModelAndView();
+					// query문자열을 읽어온다, a=xxx & b=xxx & c=xxx
+					String query = request.getQueryString();
 					
-					//query 문자열 읽어오기
-					// a=xxx&b=xxx&c=xxx
-					String query=request.getQueryString();
-					
-					//원래 가야할 요청명 
-					String url=null;
-					if(query==null){
-						url=request.getRequestURI();
-					}else{
-						url=request.getRequestURI()+"?"+query;
+					// 원래 가야할 요청명
+					String url = null;
+					if(query == null){
+						url = request.getRequestURI();
+					} else {
+						url = request.getRequestURI() + "?" + query;
 					}
 					
-					mView.setViewName("redirect:/users/loginform.do?url="+url);
-					// Spring Framework 에 ModelAndView 객체를 바로 리턴
-					return mView;
+					mv.setViewName("redirect:/users/loginform.do?url=" + url);
+					// Spring Framework에 ModelandView객체 바로 리턴
+					return mv;
 				}
 			}
 		}
-		//정상적으로 수행하기
+		// 정상적으로 수행하기
 		return joinPoint.proceed();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

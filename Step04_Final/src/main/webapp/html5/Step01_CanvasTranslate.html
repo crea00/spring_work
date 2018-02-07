@@ -14,7 +14,7 @@
 <script src="js/jquery-3.2.1.js"></script>
 <script>
 	var canvas = document.querySelector("#myCanvas");	// canvas의 참조값을 얻어옴
-	var context = canvas.getContext("2d");
+	var context = canvas.getContext("2d");				// context는 x,y축이라고 생각하면 됨
 	
 	// 이미지 로딩하기
 	var rabbitImg = new Image();
@@ -40,7 +40,7 @@
 		// context 평행이동(변화를 가함)
 		context.translate(trX, trY);
 		
-		// context 45도 회전시키기
+		// context 45도 회전시키기 (Math.PI = 3.14), 2PI = 360도
 		// context.rotate(45*Math.PI/180);
 		
 		// context 평행이동(변화를 가함)
