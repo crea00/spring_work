@@ -55,7 +55,6 @@
 					<td><a href="detail.do?num=${tmp.num }&condition=${condition}&keyword=${keyword}">${tmp.title }</a></td>
 					<td>${tmp.viewCount }</td>
 					<td>${tmp.regdate }</td>
-			 	
 				</tr>
 			</c:forEach>
 		</tbody>
